@@ -1,0 +1,16 @@
+[
+{
+  "modid": "hvii",
+  "name": "Hacker Voice: I'm In (HVII)",
+  "description": "A mod adding various client-side tweaks.",
+  "version": "${version}",
+  "mcversion": "1.10.2",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["The_Fireplace"],
+  "credits": "The_Fireplace",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

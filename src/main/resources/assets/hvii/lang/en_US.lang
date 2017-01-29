@@ -1,0 +1,23 @@
+key.fullbright.desc=Toggle Fullbright
+key.skintoggle.desc=Toggle Selected Skin Parts(Select in Config GUI)
+key.hvii.category=HVII
+cape_toggle=Enable Cape Toggling
+cape_toggle.tooltip=Enable cape toggle?
+jacket_toggle=Enable Jacket Toggling
+jacket_toggle.tooltip=Enable jacket toggle?
+left_sleeve_toggle=Enable Left Sleeve Toggling
+left_sleeve_toggle.tooltip=Enable left sleeve toggle?
+right_sleeve_toggle=Enable Right Sleeve Toggling
+right_sleeve_toggle.tooltip=Enable right sleeve toggle?
+left_pants_leg_toggle=Enable Left Pants Leg Toggling
+left_pants_leg_toggle.tooltip=Enable left pant leg toggle?
+right_pants_leg_toggle=Enable Right Pants Leg Toggling
+right_pants_leg_toggle.tooltip=Enable right pant leg toggle?
+hat_toggle=Enable Hat Toggling
+hat_toggle.tooltip=Enable hat toggle?
+normal_brightness=Regular Brightness Level
+normal_brightness.tooltip=The normal brightness setting to revert to when fullbright is toggled off.
+glowingentities=Glowing Entities
+glowingentities.tooltip=What entities get the glowing effect?
+
+cfg.hvii.category.skin=Skin Layer Toggle Settings
