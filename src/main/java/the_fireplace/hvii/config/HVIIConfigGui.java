@@ -25,6 +25,7 @@ public class HVIIConfigGui extends GuiConfig{
 	public static List<IConfigElement> getConfigElements(){
 		List<IConfigElement> list = new ArrayList();
 		list.add(new DummyConfigElement.DummyCategoryElement("skin", "cfg.hvii.category.skin", SkinEntry.class));
+		list.add(new DummyConfigElement.DummyCategoryElement("fats", "cfg.hvii.category.fats", FatsEntry.class));
 		list.addAll(new ConfigElement(HVII.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements());
 		return list;
 	}
@@ -38,6 +39,19 @@ public class HVIIConfigGui extends GuiConfig{
 		protected GuiScreen buildChildScreen(){
 			return new GuiConfig(owningScreen,
 					new ConfigElement(HVII.config.getCategory("skin")).getChildElements(), HVII.MODID, false,
+					false, GuiConfig.getAbridgedConfigPath(HVII.config.toString()));
+		}
+	}
+
+	public static class FatsEntry extends GuiConfigEntries.CategoryEntry {
+
+		public FatsEntry(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement configElement) {
+			super(owningScreen, owningEntryList, configElement);
+		}
+		@Override
+		protected GuiScreen buildChildScreen(){
+			return new GuiConfig(owningScreen,
+					new ConfigElement(HVII.config.getCategory("fats")).getChildElements(), HVII.MODID, false,
 					false, GuiConfig.getAbridgedConfigPath(HVII.config.toString()));
 		}
 	}

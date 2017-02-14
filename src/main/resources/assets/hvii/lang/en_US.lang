@@ -1,5 +1,6 @@
 key.fullbright.desc=Toggle Fullbright
-key.skintoggle.desc=Toggle Selected Skin Parts(Select in Config GUI)
+key.skintoggle.desc=Toggle Configured Skin Parts
+key.choosemobs.desc=Open Glowing Mob Selection GUI
 key.hvii.category=HVII
 cape_toggle=Enable Cape Toggling
 cape_toggle.tooltip=Enable cape toggle?
@@ -19,5 +20,19 @@ normal_brightness=Regular Brightness Level
 normal_brightness.tooltip=The normal brightness setting to revert to when fullbright is toggled off.
 glowingentities=Glowing Entities
 glowingentities.tooltip=What entities get the glowing effect?
+tpu=Ticks Per Update
+tpu.tooltip=How many render ticks before adding more particles?
+atd=Arrow Tick Distance
+atd.tooltip=Determines how far away to create particles, based on how many arrow updates to simulate. Larger values render further, but may decrease performance.
+fats_particle_primary=Main F.A.T.S. Particle
+fats_particle_primary.tooltip=The particle to use for the most accurate shot in F.A.T.S.
+fats_particle_secondary=Secondary F.A.T.S. Particle
+fats_particle_secondary.tooltip=The particle to use for the most inaccurate possible shots in F.A.T.S.
+enable_fats_primary=Main F.A.T.S. Enabled
+enable_fats_primary.tooltip=Is the most accurate F.A.T.S. rendering enabled?
+enable_fats_secondary=Secondary F.A.T.S. Enabled
+enable_fats_secondary.tooltip=Is the least accurate F.A.T.S. rendering enabled?
+extensive_fats_secondary=Extensive Secondary F.A.T.S.
+extensive_fats_secondary.tooltip=Enables use of extra inaccuracy visuals to improve the visual of the range. Disable if you are having poor performance.
 
 cfg.hvii.category.skin=Skin Layer Toggle Settings
