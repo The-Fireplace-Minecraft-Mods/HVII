@@ -53,4 +53,7 @@ public class ConfigValues {
 	public static final boolean EXTENSIVE_FATS_SECONDARY_DEFAULT = true;
 	public static boolean EXTENSIVE_FATS_SECONDARY;
 	public static String EXTENSIVE_FATS_SECONDARY_NAME = "extensive_fats_secondary";
+	public static final String FATS_THROWN_KEY_BEHAVIOR_DEFAULT = "toggle";
+	public static String FATS_THROWN_KEY_BEHAVIOR;
+	public static final String FATS_THROWN_KEY_BEHAVIOR_NAME = "fats_thrown_key_behavior";
 }

@@ -16,6 +16,7 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public final class FATSRegistry {
     private static Map<ItemStack, IFatsRenderer> fatsHandlers = Maps.newHashMap();
+    public static boolean showThrown = true;
 
     /**
      * Registers a F.A.T.S. Handler for an ItemStack

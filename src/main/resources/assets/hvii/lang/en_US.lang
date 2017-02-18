@@ -1,6 +1,7 @@
 key.fullbright.desc=Toggle Fullbright
 key.skintoggle.desc=Toggle Configured Skin Parts
 key.choosemobs.desc=Open Glowing Mob Selection GUI
+key.fatsthrown.desc=F.A.T.S. Thrown Item Key
 key.hvii.category=HVII
 cape_toggle=Enable Cape Toggling
 cape_toggle.tooltip=Enable cape toggle?
@@ -34,5 +35,7 @@ enable_fats_secondary=Secondary F.A.T.S. Enabled
 enable_fats_secondary.tooltip=Is the least accurate F.A.T.S. rendering enabled?
 extensive_fats_secondary=Extensive Secondary F.A.T.S.
 extensive_fats_secondary.tooltip=Enables use of extra inaccuracy visuals to improve the visual of the range. Disable if you are having poor performance.
+fats_thrown_key_behavior=F.A.T.S. Thrown Item Key Behavior
+fats_thrown_key_behavior.tooltip=Controls what the F.A.T.S. Thrown Item Key does
 
 cfg.hvii.category.skin=Skin Layer Toggle Settings

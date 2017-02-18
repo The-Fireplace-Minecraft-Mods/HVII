@@ -18,6 +18,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import the_fireplace.hvii.config.ConfigValues;
 import the_fireplace.hvii.fats.FATSRegistry;
 import the_fireplace.hvii.fats.FatsBowTargeting;
+import the_fireplace.hvii.fats.FatsGenericThrowableTargeting;
 import the_fireplace.hvii.keybind.KeyHandlerHVII;
 /**
  * @author The_Fireplace
@@ -45,6 +46,7 @@ public class HVII {
 	public static Property ENABLE_FATS_PRIMARY_PROPERTY;
 	public static Property ENABLE_FATS_SECONDARY_PROPERTY;
 	public static Property EXTENSIVE_FATS_SECONDARY_PROPERTY;
+	public static Property FATS_THROWN_KEY_BEHAVIOR_PROPERTY;
 	//General
 	public static Property NORMALBRIGHTNESS_PROPERTY;
 	//Hidden
@@ -71,6 +73,7 @@ public class HVII {
 		ConfigValues.ENABLE_FATS_PRIMARY = ENABLE_FATS_PRIMARY_PROPERTY.getBoolean();
 		ConfigValues.ENABLE_FATS_SECONDARY = ENABLE_FATS_SECONDARY_PROPERTY.getBoolean();
 		ConfigValues.EXTENSIVE_FATS_SECONDARY = EXTENSIVE_FATS_SECONDARY_PROPERTY.getBoolean();
+		ConfigValues.FATS_THROWN_KEY_BEHAVIOR = FATS_THROWN_KEY_BEHAVIOR_PROPERTY.getString();
 		//General
 		ConfigValues.NORMALBRIGHTNESS = NORMALBRIGHTNESS_PROPERTY.getInt();
 		//Hidden
@@ -113,13 +116,21 @@ public class HVII {
 		ENABLE_FATS_PRIMARY_PROPERTY = config.get("fats", ConfigValues.ENABLE_FATS_PRIMARY_NAME, ConfigValues.ENABLE_FATS_PRIMARY_DEFAULT, I18n.format(ConfigValues.ENABLE_FATS_PRIMARY_NAME+".tooltip"));
 		ENABLE_FATS_SECONDARY_PROPERTY = config.get("fats", ConfigValues.ENABLE_FATS_SECONDARY_NAME, ConfigValues.ENABLE_FATS_SECONDARY_DEFAULT, I18n.format(ConfigValues.ENABLE_FATS_SECONDARY_NAME+".tooltip"));
 		EXTENSIVE_FATS_SECONDARY_PROPERTY = config.get("fats", ConfigValues.EXTENSIVE_FATS_SECONDARY_NAME, ConfigValues.EXTENSIVE_FATS_SECONDARY_DEFAULT, I18n.format(ConfigValues.EXTENSIVE_FATS_SECONDARY_NAME+".tooltip"));
+		FATS_THROWN_KEY_BEHAVIOR_PROPERTY = config.get("fats", ConfigValues.FATS_THROWN_KEY_BEHAVIOR_NAME, ConfigValues.FATS_THROWN_KEY_BEHAVIOR_DEFAULT, I18n.format(ConfigValues.FATS_THROWN_KEY_BEHAVIOR_NAME+".tooltip"));
 		TPU_PROPERTY.setMinValue(1);
 		ATD_PROPERTY.setMinValue(1);
+		FATS_THROWN_KEY_BEHAVIOR_PROPERTY.setValidValues(new String[]{"toggle","enable","disable"});
 		syncConfig();
 
 		MinecraftForge.EVENT_BUS.register(new ForgeEvents());
 		MinecraftForge.EVENT_BUS.register(new KeyHandlerHVII());
 		FATSRegistry.registerHandler(new ItemStack(Items.BOW, 1, OreDictionary.WILDCARD_VALUE), new FatsBowTargeting());
+		FATSRegistry.registerHandler(new ItemStack(Items.SNOWBALL), new FatsGenericThrowableTargeting(1.5F,0.0F, 0.03F));
+		FATSRegistry.registerHandler(new ItemStack(Items.EGG), new FatsGenericThrowableTargeting(1.5F, 0.0F, 0.03F));
+		FATSRegistry.registerHandler(new ItemStack(Items.ENDER_PEARL), new FatsGenericThrowableTargeting(1.5F, 0.0F, 0.03F));
+		FATSRegistry.registerHandler(new ItemStack(Items.EXPERIENCE_BOTTLE), new FatsGenericThrowableTargeting(0.7F, -20.0F, 0.07F));
+		FATSRegistry.registerHandler(new ItemStack(Items.SPLASH_POTION, 1, OreDictionary.WILDCARD_VALUE), new FatsGenericThrowableTargeting(0.5F,-20.0F, 0.05F));
+		FATSRegistry.registerHandler(new ItemStack(Items.LINGERING_POTION, 1, OreDictionary.WILDCARD_VALUE), new FatsGenericThrowableTargeting(0.5F, -20.0F, 0.05F));
 	}
 	/**
 	 * Toggles fullbright

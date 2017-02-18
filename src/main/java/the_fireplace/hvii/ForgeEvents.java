@@ -1,6 +1,7 @@
 package the_fireplace.hvii;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -38,10 +39,13 @@ public class ForgeEvents {
 			return;
 		partial++;
 		if(partial % ConfigValues.TPU == 0)
-		if(Minecraft.getMinecraft().player != null)
-		if(Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND) != null)
-			if(FATSRegistry.getHandlerFor(Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND)) != null){
-				FATSRegistry.getHandlerFor(Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND)).handleRender(Minecraft.getMinecraft(), ConfigValues.ENABLE_FATS_PRIMARY, ConfigValues.ENABLE_FATS_SECONDARY, ConfigValues.ATD, HVII.primary, HVII.secondary, ConfigValues.EXTENSIVE_FATS_SECONDARY);
-			}
+		if(Minecraft.getMinecraft().player != null) {
+			ItemStack heldItem = Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND);
+			if (heldItem != null)
+				if (FATSRegistry.getHandlerFor(heldItem) != null) {
+					if(!FATSRegistry.getHandlerFor(heldItem).isThrown(heldItem) || FATSRegistry.showThrown)
+						FATSRegistry.getHandlerFor(heldItem).handleRender(Minecraft.getMinecraft(), ConfigValues.ENABLE_FATS_PRIMARY, ConfigValues.ENABLE_FATS_SECONDARY, ConfigValues.ATD, HVII.primary, HVII.secondary, ConfigValues.EXTENSIVE_FATS_SECONDARY, 0.0F);
+				}
+		}
 	}
 }
