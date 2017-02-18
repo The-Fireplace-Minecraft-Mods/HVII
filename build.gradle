@@ -56,6 +56,10 @@ processResources
     }
 }
 
+runClient {
+    args '--username', 'The_Fireplace'
+}
+
 task showVersion {
     description "Displays the current version"
     group "help"
