@@ -138,7 +138,7 @@ public class GuiChooseEntities extends GuiScreen {
         RenderHelper.enableStandardItemLighting();
 
         for (int x=0;x<8;x++){
-            drawString(fontRendererObj, EntityList.getEntityStringFromClass(currentlyShownMobs[x]), guiLeft+24, guiTop+10+x*18, -1);
+            drawString(fontRendererObj, currentlyShownMobs[x] == EntityPlayerMP.class ? "Player" : EntityList.getEntityStringFromClass(currentlyShownMobs[x]), guiLeft+24, guiTop+10+x*18, 0xFFFFFF);
         }
     }
 
