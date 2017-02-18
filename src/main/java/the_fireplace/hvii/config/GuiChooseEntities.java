@@ -8,6 +8,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.ArrayUtils;
 import the_fireplace.hvii.HVII;
@@ -45,6 +46,7 @@ public class GuiChooseEntities extends GuiScreen {
             allMobs.add(entry.getValue());
         }
         allMobs.remove(EntityLiving.class);
+        allMobs.add(EntityPlayerMP.class);
         currentlyShownMobs = new Class[8];
         page = 0;
         max_page = (allMobs.size() / 8)

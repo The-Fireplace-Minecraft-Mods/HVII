@@ -39,3 +39,6 @@ fats_thrown_key_behavior=F.A.T.S. Thrown Item Key Behavior
 fats_thrown_key_behavior.tooltip=Controls what the F.A.T.S. Thrown Item Key does
 
 cfg.hvii.category.skin=Skin Layer Toggle Settings
+cfg.hvii.category.skin.tooltip=Settings for toggling the second skin layer
+cfg.hvii.category.fats=F.A.T.S.
+cfg.hvii.category.fats.tooltip=Fireplace-Assisted Targeting System

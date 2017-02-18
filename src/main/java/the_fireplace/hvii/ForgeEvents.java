@@ -24,11 +24,13 @@ public class ForgeEvents {
 			HVII.syncConfig();
 	}
 	@SubscribeEvent
-	public void livingUpdate(LivingEvent.LivingUpdateEvent event){
-		if(ArrayUtils.contains(ConfigValues.GLOWINGENTITIES, event.getEntity().getClass().getSimpleName()) && !event.getEntityLiving().isGlowing())
-			event.getEntityLiving().setGlowing(true);
-		else{
-			event.getEntityLiving().setGlowing(false);
+	public void livingUpdate(LivingEvent.LivingUpdateEvent event) {
+		if (ArrayUtils.contains(ConfigValues.GLOWINGENTITIES, event.getEntity().getClass().getSimpleName())){
+			if (!event.getEntityLiving().isGlowing())
+				event.getEntityLiving().setGlowing(true);
+		}else{
+			if(event.getEntityLiving().isGlowing())
+				event.getEntityLiving().setGlowing(false);
 		}
 	}
 
