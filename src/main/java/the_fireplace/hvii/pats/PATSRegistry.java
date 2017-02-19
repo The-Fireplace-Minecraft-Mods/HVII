@@ -1,4 +1,4 @@
-package the_fireplace.hvii.fats;
+package the_fireplace.hvii.pats;
 
 import com.google.common.collect.Maps;
 import net.minecraft.item.ItemStack;
@@ -14,8 +14,8 @@ import java.util.Map;
  * @author The_Fireplace
  */
 @SideOnly(Side.CLIENT)
-public final class FATSRegistry {
-    private static Map<ItemStack, IFatsRenderer> fatsHandlers = Maps.newHashMap();
+public final class PATSRegistry {
+    private static Map<ItemStack, IPatsRenderer> patsHandlers = Maps.newHashMap();
     public static boolean showThrown = true;
 
     /**
@@ -25,8 +25,8 @@ public final class FATSRegistry {
      * @param handler
      *  An instance of the Fats Renderer to use for that stack.
      */
-    public static void registerHandler(@Nonnull ItemStack stack, @Nonnull IFatsRenderer handler){
-        fatsHandlers.putIfAbsent(stack, handler);
+    public static void registerHandler(@Nonnull ItemStack stack, @Nonnull IPatsRenderer handler){
+        patsHandlers.putIfAbsent(stack, handler);
     }
 
     /**
@@ -37,17 +37,17 @@ public final class FATSRegistry {
      *  The handler for that stack, or null if there isn't one.
      */
     @Nullable
-    public static IFatsRenderer getHandlerFor(@Nonnull ItemStack stack){
-        IFatsRenderer renderer;
-        renderer=fatsHandlers.get(stack);
+    public static IPatsRenderer getHandlerFor(@Nonnull ItemStack stack){
+        IPatsRenderer renderer;
+        renderer=patsHandlers.get(stack);
         if(renderer == null){
-            for(ItemStack key:fatsHandlers.keySet()){
+            for(ItemStack key:patsHandlers.keySet()){
                 if(key.getItem().equals(stack.getItem()))
                     if(key.getMetadata() == OreDictionary.WILDCARD_VALUE || key.getMetadata() == stack.getMetadata())
-                        if(fatsHandlers.get(key).ignoresNbt(stack))
-                            renderer = fatsHandlers.get(key);
+                        if(patsHandlers.get(key).ignoresNbt(stack))
+                            renderer = patsHandlers.get(key);
                         else if((stack.getTagCompound() == null && key.getTagCompound() == null) || (stack.getTagCompound() != null && stack.getTagCompound().equals(key.getTagCompound())))
-                            renderer = fatsHandlers.get(key);
+                            renderer = patsHandlers.get(key);
             }
         }
         return renderer;

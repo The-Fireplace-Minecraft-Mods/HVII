@@ -11,7 +11,7 @@ import org.lwjgl.input.Keyboard;
 import the_fireplace.hvii.HVII;
 import the_fireplace.hvii.config.ConfigValues;
 import the_fireplace.hvii.config.GuiChooseEntities;
-import the_fireplace.hvii.fats.FATSRegistry;
+import the_fireplace.hvii.pats.PATSRegistry;
 
 /**
  * @author The_Fireplace
@@ -22,10 +22,10 @@ public class KeyHandlerHVII {
 	public static final int FULLBRIGHT = 0;
 	public static final int SKINTOGGLE = 1;
 	public static final int CHOOSEMOBS = 2;
-	public static final int FATSTHROWN = 3;
+	public static final int PATSTHROWN = 3;
 	//Descriptions, use language file to localize later
 	private static final String[] desc = 
-		{"key.fullbright.desc", "key.skintoggle.desc", "key.choosemobs.desc", "key.fatsthrown.desc"};
+		{"key.fullbright.desc", "key.skintoggle.desc", "key.choosemobs.desc", "key.patsthrown.desc"};
 	//Default Key Values
 	private static final int[] keyValues = 
 		{Keyboard.KEY_L, Keyboard.KEY_C, Keyboard.KEY_U, Keyboard.KEY_G};
@@ -49,27 +49,27 @@ public class KeyHandlerHVII {
 		if(keys[CHOOSEMOBS].isPressed()){
 			Minecraft.getMinecraft().displayGuiScreen(new GuiChooseEntities());
 		}
-		if(keys[FATSTHROWN].isPressed() && ConfigValues.FATS_THROWN_KEY_BEHAVIOR.equals("toggle")){
-			FATSRegistry.showThrown = !FATSRegistry.showThrown;
-		}else if(keys[FATSTHROWN].isKeyDown()){
-			switch(ConfigValues.FATS_THROWN_KEY_BEHAVIOR){
+		if(keys[PATSTHROWN].isPressed() && ConfigValues.PATS_THROWN_KEY_BEHAVIOR.equals("toggle")){
+			PATSRegistry.showThrown = !PATSRegistry.showThrown;
+		}else if(keys[PATSTHROWN].isKeyDown()){
+			switch(ConfigValues.PATS_THROWN_KEY_BEHAVIOR){
 				case "enable":
-					if(!FATSRegistry.showThrown)
-						FATSRegistry.showThrown=true;
+					if(!PATSRegistry.showThrown)
+						PATSRegistry.showThrown=true;
 					break;
 				case "disable":
-					if(FATSRegistry.showThrown)
-						FATSRegistry.showThrown=false;
+					if(PATSRegistry.showThrown)
+						PATSRegistry.showThrown=false;
 			}
-		}else if(!keys[FATSTHROWN].isKeyDown()){
-			switch(ConfigValues.FATS_THROWN_KEY_BEHAVIOR){
+		}else if(!keys[PATSTHROWN].isKeyDown()){
+			switch(ConfigValues.PATS_THROWN_KEY_BEHAVIOR){
 				case "enable":
-					if(FATSRegistry.showThrown)
-						FATSRegistry.showThrown=false;
+					if(PATSRegistry.showThrown)
+						PATSRegistry.showThrown=false;
 					break;
 				case "disable":
-					if(!FATSRegistry.showThrown)
-						FATSRegistry.showThrown=true;
+					if(!PATSRegistry.showThrown)
+						PATSRegistry.showThrown=true;
 			}
 		}
 	}

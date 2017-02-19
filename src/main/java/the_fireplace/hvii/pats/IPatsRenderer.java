@@ -1,4 +1,4 @@
-package the_fireplace.hvii.fats;
+package the_fireplace.hvii.pats;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -7,7 +7,7 @@ import net.minecraft.util.EnumParticleTypes;
 /**
  * @author The_Fireplace
  */
-public interface IFatsRenderer {
+public interface IPatsRenderer {
     /**
      * Handles the rendering of F.A.T.S.
      * @param mc

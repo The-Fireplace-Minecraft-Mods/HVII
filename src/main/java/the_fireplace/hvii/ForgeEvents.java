@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
 import the_fireplace.hvii.config.ConfigValues;
-import the_fireplace.hvii.fats.FATSRegistry;
+import the_fireplace.hvii.pats.PATSRegistry;
 
 /**
  * @author The_Fireplace
@@ -37,16 +37,16 @@ public class ForgeEvents {
 	int partial;
 	@SubscribeEvent
 	public void renderTick(TickEvent.RenderTickEvent t){
-		if(!ConfigValues.ENABLE_FATS_PRIMARY && !ConfigValues.ENABLE_FATS_SECONDARY)
+		if(!ConfigValues.ENABLE_PATS_PRIMARY && !ConfigValues.ENABLE_PATS_SECONDARY)
 			return;
 		partial++;
 		if(partial % ConfigValues.TPU == 0)
 		if(Minecraft.getMinecraft().player != null) {
 			ItemStack heldItem = Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND);
 			if (heldItem != null)
-				if (FATSRegistry.getHandlerFor(heldItem) != null) {
-					if(!FATSRegistry.getHandlerFor(heldItem).isThrown(heldItem) || FATSRegistry.showThrown)
-						FATSRegistry.getHandlerFor(heldItem).handleRender(Minecraft.getMinecraft(), ConfigValues.ENABLE_FATS_PRIMARY, ConfigValues.ENABLE_FATS_SECONDARY, ConfigValues.ATD, HVII.primary, HVII.secondary, ConfigValues.EXTENSIVE_FATS_SECONDARY, 0.0F);
+				if (PATSRegistry.getHandlerFor(heldItem) != null) {
+					if(!PATSRegistry.getHandlerFor(heldItem).isThrown(heldItem) || PATSRegistry.showThrown)
+						PATSRegistry.getHandlerFor(heldItem).handleRender(Minecraft.getMinecraft(), ConfigValues.ENABLE_PATS_PRIMARY, ConfigValues.ENABLE_PATS_SECONDARY, ConfigValues.ATD, HVII.primary, HVII.secondary, ConfigValues.EXTENSIVE_PATS_SECONDARY, 0.0F);
 				}
 		}
 	}

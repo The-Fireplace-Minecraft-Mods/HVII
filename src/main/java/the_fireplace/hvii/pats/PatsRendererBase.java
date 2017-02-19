@@ -1,4 +1,4 @@
-package the_fireplace.hvii.fats;
+package the_fireplace.hvii.pats;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -7,7 +7,7 @@ import net.minecraft.util.EnumParticleTypes;
 /**
  * @author The_Fireplace
  */
-public abstract class FatsRendererBase implements IFatsRenderer {
+public abstract class PatsRendererBase implements IPatsRenderer {
     //Variables for use by extending renderers
     Minecraft mc;
     double posX;
