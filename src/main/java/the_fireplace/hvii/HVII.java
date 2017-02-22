@@ -23,7 +23,7 @@ import the_fireplace.hvii.keybind.KeyHandlerHVII;
 /**
  * @author The_Fireplace
  */
-@Mod(modid= HVII.MODID, name= HVII.MODNAME, guiFactory = "the_fireplace.hvii.config.HVIIGuiFactory", canBeDeactivated=true, clientSideOnly=true)
+@Mod(modid= HVII.MODID, name= HVII.MODNAME, guiFactory = "the_fireplace.hvii.config.HVIIGuiFactory", canBeDeactivated=true, clientSideOnly=true, updateJSON = "http://thefireplace.bitnamiapp.com/jsons/hvii.json")
 public class HVII {
 	public static final String MODID = "hvii";
 	public static final String MODNAME = "Hacker Voice: I'm In (HVII)";
@@ -65,7 +65,7 @@ public class HVII {
 		ConfigValues.ENABLELEFTPANTSLEGTOGGLE = ENABLELEFTLEGTOGGLE_PROPERTY.getBoolean();
 		ConfigValues.ENABLERIGHTPANTSLEGTOGGLE = ENABLERIGHTLEGTOGGLE_PROPERTY.getBoolean();
 		ConfigValues.ENABLEHATTOGGLE = ENABLEHATTOGGLE_PROPERTY.getBoolean();
-		//F.A.T.S.
+		//P.A.T.S.
 		ConfigValues.TPU = TPU_PROPERTY.getInt();
 		ConfigValues.ATD = ATD_PROPERTY.getInt();
 		ConfigValues.PATS_PARTICLE1 = PATS_PARTICLE1_PROPERTY.getString();
