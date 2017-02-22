@@ -1,5 +1,4 @@
 /*
-/*/
 !/src/
 !.gitignore
 !gradlew*
@@ -9,3 +8,4 @@
 !/COPYING.lesser
 !build.gradle
 !/libs/
+!/.gitlab-ci.yml
