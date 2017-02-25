@@ -1,6 +1,8 @@
 package the_fireplace.hvii;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -25,12 +27,22 @@ public class ForgeEvents {
 	}
 	@SubscribeEvent
 	public void livingUpdate(LivingEvent.LivingUpdateEvent event) {
-		if (ArrayUtils.contains(ConfigValues.GLOWINGENTITIES, event.getEntity().getClass().getSimpleName())){
-			if (!event.getEntityLiving().isGlowing())
-				event.getEntityLiving().setGlowing(true);
-		}else{
-			if(event.getEntityLiving().isGlowing())
-				event.getEntityLiving().setGlowing(false);
+		if(EntityList.getKey(event.getEntityLiving()) != null) {
+			if (ArrayUtils.contains(ConfigValues.GLOWINGENTITIES, EntityList.getKey(event.getEntityLiving()).getResourcePath())) {
+				if (!event.getEntityLiving().isGlowing())
+					event.getEntityLiving().setGlowing(true);
+			} else {
+				if (event.getEntityLiving().isGlowing())
+					event.getEntityLiving().setGlowing(false);
+			}
+		}else if(event.getEntityLiving() instanceof EntityPlayer){
+			if (ArrayUtils.contains(ConfigValues.GLOWINGENTITIES, "player")) {
+				if (!event.getEntityLiving().isGlowing())
+					event.getEntityLiving().setGlowing(true);
+			} else {
+				if (event.getEntityLiving().isGlowing())
+					event.getEntityLiving().setGlowing(false);
+			}
 		}
 	}
 
@@ -43,7 +55,7 @@ public class ForgeEvents {
 		if(partial % ConfigValues.TPU == 0)
 		if(Minecraft.getMinecraft().player != null) {
 			ItemStack heldItem = Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND);
-			if (heldItem != null)
+			if (!heldItem.isEmpty())
 				if (PATSRegistry.getHandlerFor(heldItem) != null) {
 					if(!PATSRegistry.getHandlerFor(heldItem).isThrown(heldItem) || PATSRegistry.showThrown)
 						PATSRegistry.getHandlerFor(heldItem).handleRender(Minecraft.getMinecraft(), ConfigValues.ENABLE_PATS_PRIMARY, ConfigValues.ENABLE_PATS_SECONDARY, ConfigValues.ATD, HVII.primary, HVII.secondary, ConfigValues.EXTENSIVE_PATS_SECONDARY, 0.0F);

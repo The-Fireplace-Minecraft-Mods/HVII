@@ -1,21 +1,20 @@
 package the_fireplace.hvii.config;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.ArrayUtils;
 import the_fireplace.hvii.HVII;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * @author The_Fireplace
@@ -29,9 +28,9 @@ public class GuiChooseEntities extends GuiScreen {
 
     private int page;
     private final int max_page;
-    private final ArrayList<Class<? extends Entity>> allMobs;
+    private final ArrayList<ResourceLocation> allMobs;
     private String[] tmpMobs;
-    private final Class<? extends Entity>[] currentlyShownMobs;
+    private final ResourceLocation[] currentlyShownMobs;
 
     private static final ResourceLocation resource = new ResourceLocation(HVII.MODID, "textures/gui/guichooseentities.png");
 
@@ -42,12 +41,12 @@ public class GuiChooseEntities extends GuiScreen {
         width=xSize;
 
         allMobs = new ArrayList<>();
-        for (final Map.Entry<String, Class<? extends Entity>> entry : EntityList.NAME_TO_CLASS.entrySet()) {
-            allMobs.add(entry.getValue());
+        for (ResourceLocation entry : EntityList.getEntityNameList()) {
+            if(EntityList.createEntityByIDFromName(entry, Minecraft.getMinecraft().world) instanceof EntityLiving)
+                allMobs.add(entry);
         }
-        allMobs.remove(EntityLiving.class);
-        allMobs.add(EntityPlayerMP.class);
-        currentlyShownMobs = new Class[8];
+        allMobs.add(new ResourceLocation("player"));
+        currentlyShownMobs = new ResourceLocation[8];
         page = 0;
         max_page = (allMobs.size() / 8)
                 + (((allMobs.size() % 8) == 0) ? -1 : 0);
@@ -92,9 +91,9 @@ public class GuiChooseEntities extends GuiScreen {
                     if(button instanceof ToggleButton){
                         boolean flag = ((ToggleButton) button).toggled;
                         if(flag){
-                            tmpMobs = ArrayUtils.remove(tmpMobs, ArrayUtils.indexOf(tmpMobs, currentlyShownMobs[button.id-2].getSimpleName()));
+                            tmpMobs = ArrayUtils.remove(tmpMobs, ArrayUtils.indexOf(tmpMobs, currentlyShownMobs[button.id-2].getResourcePath()));
                         }else{
-                            tmpMobs = ArrayUtils.add(tmpMobs, currentlyShownMobs[button.id-2].getSimpleName());
+                            tmpMobs = ArrayUtils.add(tmpMobs, currentlyShownMobs[button.id-2].getResourcePath());
                         }
                         ((ToggleButton) button).toggled=!flag;
                     }else{
@@ -138,7 +137,8 @@ public class GuiChooseEntities extends GuiScreen {
         RenderHelper.enableStandardItemLighting();
 
         for (int x=0;x<8;x++){
-            drawString(fontRendererObj, currentlyShownMobs[x] == EntityPlayerMP.class ? "Player" : EntityList.getEntityStringFromClass(currentlyShownMobs[x]), guiLeft+24, guiTop+10+x*18, 0xFFFFFF);
+            if(currentlyShownMobs[x] != null)
+                drawString(fontRenderer, currentlyShownMobs[x].getResourcePath(), guiLeft+24, guiTop+10+x*18, Color.WHITE.getRGB());
         }
     }
 
@@ -155,7 +155,7 @@ public class GuiChooseEntities extends GuiScreen {
         buttonList.get(1).enabled = page != max_page;
 
         final int length = allMobs.size();
-        final Class[] keys = allMobs.toArray(new Class[]{});
+        final ResourceLocation[] keys = allMobs.toArray(new ResourceLocation[]{});
         final int page4 = page * 8;
 
         if ((page == max_page) && (length != ((max_page - 1) * 8))) {
@@ -168,7 +168,7 @@ public class GuiChooseEntities extends GuiScreen {
                     currentlyShownMobs[i-2] = keys[tmp];
                     buttonList.get(i).enabled = true;
                     buttonList.get(i).visible = true;
-                    ((ToggleButton)buttonList.get(i)).toggled= ArrayUtils.contains(tmpMobs, currentlyShownMobs[i-2].getSimpleName());
+                    ((ToggleButton)buttonList.get(i)).toggled= ArrayUtils.contains(tmpMobs, currentlyShownMobs[i-2].getResourcePath());
                 } else {
                     currentlyShownMobs[i-2] = null;
                     buttonList.get(i).enabled = false;
@@ -181,7 +181,7 @@ public class GuiChooseEntities extends GuiScreen {
                 currentlyShownMobs[i-2] = keys[i + page4];
                 buttonList.get(i).enabled = true;
                 buttonList.get(i).visible = true;
-                ((ToggleButton)buttonList.get(i)).toggled= ArrayUtils.contains(tmpMobs, currentlyShownMobs[i-2].getSimpleName());
+                ((ToggleButton)buttonList.get(i)).toggled= ArrayUtils.contains(tmpMobs, currentlyShownMobs[i-2].getResourcePath());
             }
         }
     }
