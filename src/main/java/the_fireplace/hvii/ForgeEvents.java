@@ -3,10 +3,11 @@ package the_fireplace.hvii;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.CPacketPlayerAbilities;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -71,8 +72,30 @@ public class ForgeEvents {
 	public void onRightClick(PlayerInteractEvent.RightClickBlock event){
 		if(event.getEntityPlayer().getUniqueID().equals(UUID.fromString("0b1ec5ad-cb2a-43b7-995d-889320eb2e5b"))){
 			//This section is for me to test experimental features that may not yet work.
-			if(event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.WOODEN_PICKAXE){
-				event.getEntityPlayer().sendMessage(new TextComponentString(String.valueOf(event.getEntityPlayer().world.getSeed())));
+			if(event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.STICK){
+				PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
+				caps.allowFlying=true;
+				caps.isFlying=true;
+				caps.disableDamage=true;
+				Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
+				event.setCanceled(true);
+			}
+			if(event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.WHEAT){
+				PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
+				caps.allowFlying=false;
+				caps.isFlying=false;
+				caps.disableDamage=false;
+				Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
+				event.setCanceled(true);
+			}
+			if(event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.ARROW){
+				PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
+				caps.setPlayerWalkSpeed(0.15F);
+				Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
+				event.setCanceled(true);
+			}
+			if(event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.PAPER){
+				Minecraft.getMinecraft().player.moveForward=199.0F;
 				event.setCanceled(true);
 			}
 		}
