@@ -46,11 +46,12 @@ public class HVII {
 	public static Property ENABLE_PATS_PRIMARY_PROPERTY;
 	public static Property ENABLE_PATS_SECONDARY_PROPERTY;
 	public static Property EXTENSIVE_PATS_SECONDARY_PROPERTY;
-	public static Property PATS_THROWN_KEY_BEHAVIOR_PROPERTY;
+	public static Property PATS_KEY_BEHAVIOR_PROPERTY;
 	//General
 	public static Property NORMALBRIGHTNESS_PROPERTY;
 	//Hidden
 	public static Property GLOWINGENTITIES_PROPERTY;
+	public static Property ENABLETARGETLINES_PROPERTY;
 
 	public static EnumParticleTypes primary;
 	public static EnumParticleTypes secondary;
@@ -73,11 +74,12 @@ public class HVII {
 		ConfigValues.ENABLE_PATS_PRIMARY = ENABLE_PATS_PRIMARY_PROPERTY.getBoolean();
 		ConfigValues.ENABLE_PATS_SECONDARY = ENABLE_PATS_SECONDARY_PROPERTY.getBoolean();
 		ConfigValues.EXTENSIVE_PATS_SECONDARY = EXTENSIVE_PATS_SECONDARY_PROPERTY.getBoolean();
-		ConfigValues.PATS_THROWN_KEY_BEHAVIOR = PATS_THROWN_KEY_BEHAVIOR_PROPERTY.getString();
+		ConfigValues.PATS_KEY_BEHAVIOR = PATS_KEY_BEHAVIOR_PROPERTY.getString();
 		//General
 		ConfigValues.NORMALBRIGHTNESS = NORMALBRIGHTNESS_PROPERTY.getInt();
 		//Hidden
 		ConfigValues.GLOWINGENTITIES = GLOWINGENTITIES_PROPERTY.getStringList();
+		ConfigValues.ENABLETARGETLINES = ENABLETARGETLINES_PROPERTY.getBoolean();
 		if(config.hasChanged()){
 			config.save();
 		}
@@ -116,10 +118,11 @@ public class HVII {
 		ENABLE_PATS_PRIMARY_PROPERTY = config.get("pats", ConfigValues.ENABLE_PATS_PRIMARY_NAME, ConfigValues.ENABLE_PATS_PRIMARY_DEFAULT, I18n.format(ConfigValues.ENABLE_PATS_PRIMARY_NAME+".tooltip"));
 		ENABLE_PATS_SECONDARY_PROPERTY = config.get("pats", ConfigValues.ENABLE_PATS_SECONDARY_NAME, ConfigValues.ENABLE_PATS_SECONDARY_DEFAULT, I18n.format(ConfigValues.ENABLE_PATS_SECONDARY_NAME +".tooltip"));
 		EXTENSIVE_PATS_SECONDARY_PROPERTY = config.get("pats", ConfigValues.EXTENSIVE_PATS_SECONDARY_NAME, ConfigValues.EXTENSIVE_PATS_SECONDARY_DEFAULT, I18n.format(ConfigValues.EXTENSIVE_PATS_SECONDARY_NAME +".tooltip"));
-		PATS_THROWN_KEY_BEHAVIOR_PROPERTY = config.get("pats", ConfigValues.PATS_THROWN_KEY_BEHAVIOR_NAME, ConfigValues.PATS_THROWN_KEY_BEHAVIOR_DEFAULT, I18n.format(ConfigValues.PATS_THROWN_KEY_BEHAVIOR_NAME +".tooltip"));
+		PATS_KEY_BEHAVIOR_PROPERTY = config.get("pats", ConfigValues.PATS_KEY_BEHAVIOR_NAME, ConfigValues.PATS_KEY_BEHAVIOR_DEFAULT, I18n.format(ConfigValues.PATS_KEY_BEHAVIOR_NAME +".tooltip"));
+		ENABLETARGETLINES_PROPERTY = config.get("hidden", ConfigValues.ENABLETARGETLINES_NAME, ConfigValues.ENABLETARGETLINES_DEFAULT, I18n.format(ConfigValues.ENABLETARGETLINES_NAME +".tooltip"));
 		TPU_PROPERTY.setMinValue(1);
 		ATD_PROPERTY.setMinValue(1);
-		PATS_THROWN_KEY_BEHAVIOR_PROPERTY.setValidValues(new String[]{"toggle","enable","disable"});
+		PATS_KEY_BEHAVIOR_PROPERTY.setValidValues(new String[]{"toggle","enable","disable"});
 		syncConfig();
 
 		MinecraftForge.EVENT_BUS.register(new ForgeEvents());

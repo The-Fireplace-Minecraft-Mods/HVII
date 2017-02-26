@@ -1,7 +1,7 @@
 key.fullbright.desc=Toggle Fullbright
 key.skintoggle.desc=Toggle Configured Skin Parts
 key.choosemobs.desc=Open Glowing Mob Selection GUI
-key.patsthrown.desc=P.A.T.S. Thrown Item Key
+key.patsthrown.desc=P.A.T.S. Key
 key.hvii.category=HVII
 cape_toggle=Enable Cape Toggling
 cape_toggle.tooltip=Enable cape toggle?
@@ -35,8 +35,8 @@ enable_pats_secondary=Secondary P.A.T.S. Enabled
 enable_pats_secondary.tooltip=Is the least accurate P.A.T.S. rendering enabled?
 extensive_pats_secondary=Extensive Secondary P.A.T.S.
 extensive_pats_secondary.tooltip=Enables use of extra inaccuracy visuals to improve the visual of the range. Disable if you are having poor performance.
-pats_thrown_key_behavior=P.A.T.S. Thrown Item Key Behavior
-pats_thrown_key_behavior.tooltip=Controls what the P.A.T.S. Thrown Item Key does
+pats_thrown_key_behavior=P.A.T.S. Key Behavior
+pats_thrown_key_behavior.tooltip=Controls what the P.A.T.S. Key does
 
 cfg.hvii.category.skin=Skin Layer Toggle Settings
 cfg.hvii.category.skin.tooltip=Settings for toggling the second skin layer

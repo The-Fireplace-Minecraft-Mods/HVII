@@ -1,8 +1,6 @@
 package the_fireplace.hvii.config;
 /**
- * 
  * @author The_Fireplace
- *
  */
 public class ConfigValues {
 	public static final boolean ENABLECAPETOGGLE_DEFAULT = false;
@@ -53,7 +51,10 @@ public class ConfigValues {
 	public static final boolean EXTENSIVE_PATS_SECONDARY_DEFAULT = true;
 	public static boolean EXTENSIVE_PATS_SECONDARY;
 	public static String EXTENSIVE_PATS_SECONDARY_NAME = "extensive_pats_secondary";
-	public static final String PATS_THROWN_KEY_BEHAVIOR_DEFAULT = "toggle";
-	public static String PATS_THROWN_KEY_BEHAVIOR;
-	public static final String PATS_THROWN_KEY_BEHAVIOR_NAME = "pats_thrown_key_behavior";
+	public static final String PATS_KEY_BEHAVIOR_DEFAULT = "toggle";
+	public static String PATS_KEY_BEHAVIOR;
+	public static final String PATS_KEY_BEHAVIOR_NAME = "pats_thrown_key_behavior";
+	public static final boolean ENABLETARGETLINES_DEFAULT = true;
+	public static boolean ENABLETARGETLINES;
+	public static final String ENABLETARGETLINES_NAME = "enable_target_lines";
 }

@@ -61,9 +61,8 @@ public class ForgeEvents {
 		if(Minecraft.getMinecraft().player != null) {
 			ItemStack heldItem = Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND);
 			if (!heldItem.isEmpty())
-				if (PATSRegistry.getHandlerFor(heldItem) != null) {
-					if(!PATSRegistry.getHandlerFor(heldItem).isThrown(heldItem) || PATSRegistry.showThrown)
-						PATSRegistry.getHandlerFor(heldItem).handleRender(Minecraft.getMinecraft(), ConfigValues.ENABLE_PATS_PRIMARY, ConfigValues.ENABLE_PATS_SECONDARY, ConfigValues.ATD, HVII.primary, HVII.secondary, ConfigValues.EXTENSIVE_PATS_SECONDARY, 0.0F);
+				if (PATSRegistry.getHandlerFor(heldItem) != null && ConfigValues.ENABLETARGETLINES) {
+					PATSRegistry.getHandlerFor(heldItem).handleRender(Minecraft.getMinecraft(), ConfigValues.ENABLE_PATS_PRIMARY, ConfigValues.ENABLE_PATS_SECONDARY, ConfigValues.ATD, HVII.primary, HVII.secondary, ConfigValues.EXTENSIVE_PATS_SECONDARY, 0.0F);
 				}
 		}
 	}

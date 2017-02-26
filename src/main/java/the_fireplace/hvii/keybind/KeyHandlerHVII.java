@@ -11,7 +11,6 @@ import org.lwjgl.input.Keyboard;
 import the_fireplace.hvii.HVII;
 import the_fireplace.hvii.config.ConfigValues;
 import the_fireplace.hvii.config.GuiChooseEntities;
-import the_fireplace.hvii.pats.PATSRegistry;
 
 /**
  * @author The_Fireplace
@@ -49,27 +48,28 @@ public class KeyHandlerHVII {
 		if(keys[CHOOSEMOBS].isPressed()){
 			Minecraft.getMinecraft().displayGuiScreen(new GuiChooseEntities());
 		}
-		if(keys[PATSTHROWN].isPressed() && ConfigValues.PATS_THROWN_KEY_BEHAVIOR.equals("toggle")){
-			PATSRegistry.showThrown = !PATSRegistry.showThrown;
+		if(keys[PATSTHROWN].isPressed() && ConfigValues.PATS_KEY_BEHAVIOR.equals("toggle")){
+			HVII.ENABLETARGETLINES_PROPERTY.set(!ConfigValues.ENABLETARGETLINES);;
+			HVII.syncConfig();
 		}else if(keys[PATSTHROWN].isKeyDown()){
-			switch(ConfigValues.PATS_THROWN_KEY_BEHAVIOR){
+			switch(ConfigValues.PATS_KEY_BEHAVIOR){
 				case "enable":
-					if(!PATSRegistry.showThrown)
-						PATSRegistry.showThrown=true;
+					if(!ConfigValues.ENABLETARGETLINES)
+						ConfigValues.ENABLETARGETLINES=true;
 					break;
 				case "disable":
-					if(PATSRegistry.showThrown)
-						PATSRegistry.showThrown=false;
+					if(ConfigValues.ENABLETARGETLINES)
+						ConfigValues.ENABLETARGETLINES=false;
 			}
 		}else if(!keys[PATSTHROWN].isKeyDown()){
-			switch(ConfigValues.PATS_THROWN_KEY_BEHAVIOR){
+			switch(ConfigValues.PATS_KEY_BEHAVIOR){
 				case "enable":
-					if(PATSRegistry.showThrown)
-						PATSRegistry.showThrown=false;
+					if(ConfigValues.ENABLETARGETLINES)
+						ConfigValues.ENABLETARGETLINES=false;
 					break;
 				case "disable":
-					if(!PATSRegistry.showThrown)
-						PATSRegistry.showThrown=true;
+					if(!ConfigValues.ENABLETARGETLINES)
+						ConfigValues.ENABLETARGETLINES=true;
 			}
 		}
 	}

@@ -4,7 +4,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemBow;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -13,11 +12,6 @@ import net.minecraft.util.math.MathHelper;
  * @author The_Fireplace
  */
 public class PatsBowTargeting extends PatsRendererBase {
-
-    @Override
-    public boolean isThrown(ItemStack stack) {
-        return false;
-    }
 
     @Override
     public void handleRender(Minecraft mc, boolean primaryRenderEnabled, boolean secondaryRenderEnabled, int projectileTickCount, EnumParticleTypes primaryParticle, EnumParticleTypes secondaryParticle, boolean extensiveSecondary, float inaccuracyBoost) {

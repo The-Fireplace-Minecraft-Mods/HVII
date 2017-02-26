@@ -37,13 +37,4 @@ public interface IPatsRenderer {
      *  true if NBT Data should be ignored, otherwise return false.
      */
     boolean ignoresNbt(ItemStack stack);
-
-    /**
-     * Check if the stack is a thrown item
-     * @param stack
-     *  The stack to check
-     * @return
-     *  true if the item is thrown(Projectile launches immediately on right click) or false if it isn't
-     */
-    boolean isThrown(ItemStack stack);
 }

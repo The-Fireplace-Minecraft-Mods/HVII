@@ -34,9 +34,4 @@ public abstract class PatsRendererBase implements IPatsRenderer {
     public boolean ignoresNbt(ItemStack stack) {
         return true;
     }
-
-    @Override
-    public boolean isThrown(ItemStack stack) {
-        return true;
-    }
 }

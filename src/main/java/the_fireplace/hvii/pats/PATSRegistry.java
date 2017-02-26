@@ -16,7 +16,6 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public final class PATSRegistry {
     private static Map<ItemStack, IPatsRenderer> patsHandlers = Maps.newHashMap();
-    public static boolean showThrown = true;
 
     /**
      * Registers a F.A.T.S. Handler for an ItemStack
