@@ -1,11 +1,18 @@
 package the_fireplace.hvii;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -15,6 +22,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.ArrayUtils;
 import the_fireplace.hvii.config.ConfigValues;
 import the_fireplace.hvii.pats.PATSRegistry;
 import the_fireplace.hvii.pats.PatsBowTargeting;
@@ -49,6 +57,7 @@ public class HVII {
 	public static Property PATS_KEY_BEHAVIOR_PROPERTY;
 	//General
 	public static Property NORMALBRIGHTNESS_PROPERTY;
+	public static Property EXCLUDEORES_PROPERTY;
 	//Hidden
 	public static Property GLOWINGENTITIES_PROPERTY;
 	public static Property ENABLETARGETLINES_PROPERTY;
@@ -77,6 +86,7 @@ public class HVII {
 		ConfigValues.PATS_KEY_BEHAVIOR = PATS_KEY_BEHAVIOR_PROPERTY.getString();
 		//General
 		ConfigValues.NORMALBRIGHTNESS = NORMALBRIGHTNESS_PROPERTY.getInt();
+		ConfigValues.EXCLUDEORES = EXCLUDEORES_PROPERTY.getStringList();
 		//Hidden
 		ConfigValues.GLOWINGENTITIES = GLOWINGENTITIES_PROPERTY.getStringList();
 		ConfigValues.ENABLETARGETLINES = ENABLETARGETLINES_PROPERTY.getBoolean();
@@ -110,6 +120,7 @@ public class HVII {
 		ENABLERIGHTLEGTOGGLE_PROPERTY = config.get("skin", ConfigValues.ENABLERIGHTPANTSLEGTOGGLE_NAME, ConfigValues.ENABLERIGHTPANTSLEGTOGGLE_DEFAULT, I18n.format(ConfigValues.ENABLERIGHTPANTSLEGTOGGLE_NAME +".tooltip"));
 		ENABLEHATTOGGLE_PROPERTY = config.get("skin", ConfigValues.ENABLEHATTOGGLE_NAME, ConfigValues.ENABLEHATTOGGLE_DEFAULT, I18n.format(ConfigValues.ENABLEHATTOGGLE_NAME +".tooltip"));
 		NORMALBRIGHTNESS_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.NORMALBRIGHTNESS_NAME, ConfigValues.NORMALBRIGHTNESS_DEFAULT, I18n.format(ConfigValues.NORMALBRIGHTNESS_NAME+".tooltip"));
+		EXCLUDEORES_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.EXCLUDEORES_NAME, ConfigValues.EXCLUDEORES_DEFAULT, I18n.format(ConfigValues.EXCLUDEORES_NAME+".tooltip"));
 		GLOWINGENTITIES_PROPERTY = config.get("hidden", ConfigValues.GLOWINGENTITIES_NAME, ConfigValues.GLOWINGENTITIES_DEFAULT, I18n.format(ConfigValues.GLOWINGENTITIES_NAME+".tooltip"));
 		TPU_PROPERTY = config.get("pats", ConfigValues.TPU_NAME, ConfigValues.TPU_DEFAULT, I18n.format(ConfigValues.TPU_NAME+".tooltip"));
 		ATD_PROPERTY = config.get("pats", ConfigValues.ATD_NAME, ConfigValues.ATD_DEFAULT, I18n.format(ConfigValues.ATD_NAME+".tooltip"));
@@ -139,11 +150,10 @@ public class HVII {
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void toggleFullbright(){
-		if(Minecraft.getMinecraft().gameSettings.gammaSetting < 1000000){
+		if(Minecraft.getMinecraft().gameSettings.gammaSetting < 1000000)
 			Minecraft.getMinecraft().gameSettings.gammaSetting = 1000000;
-		}else{
+		else
 			Minecraft.getMinecraft().gameSettings.gammaSetting = ConfigValues.NORMALBRIGHTNESS;
-		}
 		Minecraft.getMinecraft().gameSettings.saveOptions();
 	}
 	/**
@@ -151,27 +161,45 @@ public class HVII {
 	 */
 	@SideOnly(Side.CLIENT)
 	public static void toggleEnabledParts(){
-		if(ConfigValues.ENABLECAPETOGGLE){
+		if(ConfigValues.ENABLECAPETOGGLE)
 			Minecraft.getMinecraft().gameSettings.switchModelPartEnabled(EnumPlayerModelParts.CAPE);
-		}
-		if(ConfigValues.ENABLEJACKETTOGGLE){
+		if(ConfigValues.ENABLEJACKETTOGGLE)
 			Minecraft.getMinecraft().gameSettings.switchModelPartEnabled(EnumPlayerModelParts.JACKET);
-		}
-		if(ConfigValues.ENABLELEFTSLEEVETOGGLE){
+		if(ConfigValues.ENABLELEFTSLEEVETOGGLE)
 			Minecraft.getMinecraft().gameSettings.switchModelPartEnabled(EnumPlayerModelParts.LEFT_SLEEVE);
-		}
-		if(ConfigValues.ENABLERIGHTSLEEVETOGGLE){
+		if(ConfigValues.ENABLERIGHTSLEEVETOGGLE)
 			Minecraft.getMinecraft().gameSettings.switchModelPartEnabled(EnumPlayerModelParts.RIGHT_SLEEVE);
-		}
-		if(ConfigValues.ENABLELEFTPANTSLEGTOGGLE){
+		if(ConfigValues.ENABLELEFTPANTSLEGTOGGLE)
 			Minecraft.getMinecraft().gameSettings.switchModelPartEnabled(EnumPlayerModelParts.LEFT_PANTS_LEG);
-		}
-		if(ConfigValues.ENABLERIGHTPANTSLEGTOGGLE){
+		if(ConfigValues.ENABLERIGHTPANTSLEGTOGGLE)
 			Minecraft.getMinecraft().gameSettings.switchModelPartEnabled(EnumPlayerModelParts.RIGHT_PANTS_LEG);
-		}
-		if(ConfigValues.ENABLEHATTOGGLE){
+		if(ConfigValues.ENABLEHATTOGGLE)
 			Minecraft.getMinecraft().gameSettings.switchModelPartEnabled(EnumPlayerModelParts.HAT);
-		}
 		Minecraft.getMinecraft().gameSettings.saveOptions();
+	}
+
+	/**
+	 * Scans the loaded area for ores.
+	 */
+	@SideOnly(Side.CLIENT)
+	public static void scanOres(){
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		World world = player.world;
+		ChunkPos chunk = new ChunkPos(player.getPosition());
+		for(int x=chunk.getXStart();x<=chunk.getXEnd();x++){
+			for(int z=chunk.getZStart();z<=chunk.getZEnd();z++){
+				for(int y=0;y<=player.posY;y++){
+					IBlockState state = world.getBlockState(new BlockPos(x, y, z));
+					ItemStack stack = new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state));
+					if(!stack.isEmpty())
+						for(int oreId:OreDictionary.getOreIDs(stack)){
+							String oreName = OreDictionary.getOreName(oreId);
+							if(oreName.startsWith("ore") && !ArrayUtils.contains(ConfigValues.EXCLUDEORES, oreName)){
+								player.sendMessage(new TextComponentTranslation("hvii.orefound", oreName, x, y, z));
+							}
+						}
+				}
+			}
+		}
 	}
 }

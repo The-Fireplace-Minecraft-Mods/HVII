@@ -8,6 +8,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerAbilities;
 import net.minecraft.util.EnumHand;
+import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -18,6 +19,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
 import the_fireplace.hvii.config.ConfigValues;
+import the_fireplace.hvii.config.GuiChooseEntities;
 import the_fireplace.hvii.pats.PATSRegistry;
 
 import java.util.UUID;
@@ -67,6 +69,28 @@ public class ForgeEvents {
 				if (PATSRegistry.getHandlerFor(heldItem) != null && ConfigValues.ENABLETARGETLINES) {
 					PATSRegistry.getHandlerFor(heldItem).handleRender(Minecraft.getMinecraft(), ConfigValues.ENABLE_PATS_PRIMARY, ConfigValues.ENABLE_PATS_SECONDARY, ConfigValues.ATD, HVII.primary, HVII.secondary, ConfigValues.EXTENSIVE_PATS_SECONDARY, 0.0F);
 				}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onChatSent(ClientChatEvent event){
+		switch(event.getOriginalMessage()){
+			case "$orescan":
+				HVII.scanOres();
+				event.setCanceled(true);
+				break;
+			case "$fullbright":
+				HVII.toggleFullbright();
+				event.setCanceled(true);
+				break;
+			case "$skintoggle":
+				HVII.toggleEnabledParts();
+				event.setCanceled(true);
+				break;
+			case "$choosemobs":
+				Minecraft.getMinecraft().displayGuiScreen(new GuiChooseEntities());
+				event.setCanceled(true);
+				break;
 		}
 	}
 }
