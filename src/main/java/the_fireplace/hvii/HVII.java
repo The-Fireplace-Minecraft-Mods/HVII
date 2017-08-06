@@ -23,7 +23,7 @@ import the_fireplace.hvii.keybind.KeyHandlerHVII;
 /**
  * @author The_Fireplace
  */
-@Mod(modid= HVII.MODID, name= HVII.MODNAME, guiFactory = "the_fireplace.hvii.config.HVIIGuiFactory", canBeDeactivated=true, clientSideOnly=true, updateJSON = "http://thefireplace.bitnamiapp.com/jsons/hvii.json")
+@Mod(modid= HVII.MODID, name= HVII.MODNAME, guiFactory = "the_fireplace.hvii.config.HVIIGuiFactory", canBeDeactivated=true, clientSideOnly=true, updateJSON = "https://bitbucket.org/The_Fireplace/minecraft-mod-updates/raw/master/hvii.json")
 public class HVII {
 	public static final String MODID = "hvii";
 	public static final String MODNAME = "Hacker Voice: I'm In (HVII)";

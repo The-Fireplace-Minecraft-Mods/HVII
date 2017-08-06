@@ -14,7 +14,7 @@ public class ToggleButton extends GuiButton {
     }
 
     @Override
-    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
         if (this.visible)
         {
             mc.getTextureManager().bindTexture(BUTTON_TEXTURES);
@@ -23,7 +23,7 @@ public class ToggleButton extends GuiButton {
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             int i = toggled ? 1 : 0;
-            this.drawTexturedModalRect(this.xPosition, this.yPosition, 192 + i * 16, 0, 16, 16);
+            this.drawTexturedModalRect(this.x, this.y, 192 + i * 16, 0, 16, 16);
         }
     }
 }

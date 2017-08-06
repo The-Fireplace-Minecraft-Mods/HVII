@@ -1,1 +1,1 @@
-Switched the P.A.T.S. Keybind to affect everything; when it is in toggle mode, it now remembers your setting when you restart the game.
+Updated to 1.12
