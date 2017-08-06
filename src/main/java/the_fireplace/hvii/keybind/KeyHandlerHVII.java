@@ -22,12 +22,13 @@ public class KeyHandlerHVII {
 	public static final int SKINTOGGLE = 1;
 	public static final int CHOOSEMOBS = 2;
 	public static final int PATSTHROWN = 3;
+	public static final int ORESCAN = 4;
 	//Descriptions, use language file to localize later
 	private static final String[] desc = 
-		{"key.fullbright.desc", "key.skintoggle.desc", "key.choosemobs.desc", "key.patsthrown.desc"};
+		{"key.fullbright.desc", "key.skintoggle.desc", "key.choosemobs.desc", "key.patsthrown.desc", "key.orescan.desc"};
 	//Default Key Values
 	private static final int[] keyValues = 
-		{Keyboard.KEY_L, Keyboard.KEY_C, Keyboard.KEY_U, Keyboard.KEY_G};
+		{Keyboard.KEY_L, Keyboard.KEY_C, Keyboard.KEY_U, Keyboard.KEY_G, Keyboard.KEY_O};
 	private final KeyBinding[] keys;
 	public KeyHandlerHVII(){
 		keys = new KeyBinding[desc.length];
@@ -39,15 +40,14 @@ public class KeyHandlerHVII {
 
 	@SubscribeEvent
 	public void onKeyInput(KeyInputEvent event){
-		if(keys[FULLBRIGHT].isPressed()){
+		if(keys[FULLBRIGHT].isPressed())
 			HVII.toggleFullbright();
-		}
-		if(keys[SKINTOGGLE].isPressed()){
+		if(keys[SKINTOGGLE].isPressed())
 			HVII.toggleEnabledParts();
-		}
-		if(keys[CHOOSEMOBS].isPressed()){
+		if(keys[CHOOSEMOBS].isPressed())
 			Minecraft.getMinecraft().displayGuiScreen(new GuiChooseEntities());
-		}
+		if(keys[ORESCAN].isPressed())
+			HVII.scanOres();
 		if(keys[PATSTHROWN].isPressed() && ConfigValues.PATS_KEY_BEHAVIOR.equals("toggle")){
 			HVII.ENABLETARGETLINES_PROPERTY.set(!ConfigValues.ENABLETARGETLINES);;
 			HVII.syncConfig();

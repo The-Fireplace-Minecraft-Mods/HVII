@@ -2,7 +2,11 @@ key.fullbright.desc=Toggle Fullbright
 key.skintoggle.desc=Toggle Configured Skin Parts
 key.choosemobs.desc=Open Glowing Mob Selection GUI
 key.patsthrown.desc=P.A.T.S. Key
+key.orescan.desc=Scan for Ores
 key.hvii.category=HVII
+
+hvii.orefound=Ore %s found at x %d, y %d, z %d
+
 cape_toggle=Enable Cape Toggling
 cape_toggle.tooltip=Enable cape toggle?
 jacket_toggle=Enable Jacket Toggling
@@ -19,6 +23,8 @@ hat_toggle=Enable Hat Toggling
 hat_toggle.tooltip=Enable hat toggle?
 normal_brightness=Regular Brightness Level
 normal_brightness.tooltip=The normal brightness setting to revert to when fullbright is toggled off.
+excludeores=Exclude Ores
+excludeores.tooltip=What ores should not be detected by the Ore Scanner?
 glowingentities=Glowing Entities
 glowingentities.tooltip=What entities get the glowing effect?
 tpu=Ticks Per Update

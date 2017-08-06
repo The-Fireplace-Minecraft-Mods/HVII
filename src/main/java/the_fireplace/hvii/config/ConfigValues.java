@@ -30,6 +30,9 @@ public class ConfigValues {
 	public static final String[] GLOWINGENTITIES_DEFAULT = new String[]{"EntityPlayerMP"};
 	public static String[] GLOWINGENTITIES;
 	public static final String GLOWINGENTITIES_NAME = "glowingentities";
+	public static final String[] EXCLUDEORES_DEFAULT = new String[]{"oreCoal"};
+	public static String[] EXCLUDEORES;
+	public static final String EXCLUDEORES_NAME = "excludeores";
 	public static final int TPU_DEFAULT = 10;
 	public static int TPU;
 	public static final String TPU_NAME = "tpu";
