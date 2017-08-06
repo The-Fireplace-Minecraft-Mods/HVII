@@ -11,6 +11,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -25,14 +26,15 @@ import java.util.UUID;
  * @author The_Fireplace
  */
 @SideOnly(Side.CLIENT)
+@Mod.EventBusSubscriber(Side.CLIENT)
 public class ForgeEvents {
 	@SubscribeEvent
-	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
+	public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
 		if(eventArgs.getModID().equals(HVII.MODID))
 			HVII.syncConfig();
 	}
 	@SubscribeEvent
-	public void livingUpdate(LivingEvent.LivingUpdateEvent event) {
+	public static void livingUpdate(LivingEvent.LivingUpdateEvent event) {
 		if(EntityList.getKey(event.getEntityLiving()) != null) {
 			if (ArrayUtils.contains(ConfigValues.GLOWINGENTITIES, EntityList.getKey(event.getEntityLiving()).getResourcePath())) {
 				if (!event.getEntityLiving().isGlowing())
@@ -52,9 +54,9 @@ public class ForgeEvents {
 		}
 	}
 
-	int partial;
+	static int partial;
 	@SubscribeEvent
-	public void renderTick(TickEvent.RenderTickEvent t){
+	public static void renderTick(TickEvent.RenderTickEvent t){
 		if(!ConfigValues.ENABLE_PATS_PRIMARY && !ConfigValues.ENABLE_PATS_SECONDARY)
 			return;
 		partial++;
@@ -65,39 +67,6 @@ public class ForgeEvents {
 				if (PATSRegistry.getHandlerFor(heldItem) != null && ConfigValues.ENABLETARGETLINES) {
 					PATSRegistry.getHandlerFor(heldItem).handleRender(Minecraft.getMinecraft(), ConfigValues.ENABLE_PATS_PRIMARY, ConfigValues.ENABLE_PATS_SECONDARY, ConfigValues.ATD, HVII.primary, HVII.secondary, ConfigValues.EXTENSIVE_PATS_SECONDARY, 0.0F);
 				}
-		}
-	}
-
-	@SubscribeEvent
-	public void onRightClick(PlayerInteractEvent.RightClickBlock event){
-		if(event.getEntityPlayer().getUniqueID().equals(UUID.fromString("0b1ec5ad-cb2a-43b7-995d-889320eb2e5b"))){
-			//This section is for me to test experimental features that may not yet work.
-			if(event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.STICK){
-				PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
-				caps.allowFlying=true;
-				caps.isFlying=true;
-				caps.disableDamage=true;
-				Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
-				event.setCanceled(true);
-			}
-			if(event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.WHEAT){
-				PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
-				caps.allowFlying=false;
-				caps.isFlying=false;
-				caps.disableDamage=false;
-				Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
-				event.setCanceled(true);
-			}
-			if(event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.ARROW){
-				PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
-				caps.setPlayerWalkSpeed(0.15F);
-				Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
-				event.setCanceled(true);
-			}
-			if(event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.PAPER){
-				Minecraft.getMinecraft().player.moveForward=199.0F;
-				event.setCanceled(true);
-			}
 		}
 	}
 }

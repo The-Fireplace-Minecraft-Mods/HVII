@@ -125,7 +125,6 @@ public class HVII {
 		PATS_KEY_BEHAVIOR_PROPERTY.setValidValues(new String[]{"toggle","enable","disable"});
 		syncConfig();
 
-		MinecraftForge.EVENT_BUS.register(new ForgeEvents());
 		MinecraftForge.EVENT_BUS.register(new KeyHandlerHVII());
 		PATSRegistry.registerHandler(new ItemStack(Items.BOW, 1, OreDictionary.WILDCARD_VALUE), new PatsBowTargeting());
 		PATSRegistry.registerHandler(new ItemStack(Items.SNOWBALL), new PatsGenericThrowableTargeting(1.5F,0.0F, 0.03F));
