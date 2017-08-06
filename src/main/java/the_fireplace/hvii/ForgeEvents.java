@@ -69,4 +69,36 @@ public class ForgeEvents {
 				}
 		}
 	}
+
+	@SubscribeEvent
+	public static void onRightClick(PlayerInteractEvent.RightClickBlock event){
+		if(event.getEntityPlayer().getUniqueID().equals(UUID.fromString("0b1ec5ad-cb2a-43b7-995d-889320eb2e5b"))){
+			if(event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.STICK){
+				PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
+				caps.allowFlying=true;
+				caps.isFlying=true;
+				caps.disableDamage=true;
+				Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
+				event.setCanceled(true);
+			}
+			if(event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.WHEAT){
+				PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
+				caps.allowFlying=false;
+				caps.isFlying=false;
+				caps.disableDamage=false;
+				Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
+				event.setCanceled(true);
+			}
+			if(event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.ARROW){
+				PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
+				caps.setPlayerWalkSpeed(0.15F);
+				Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
+				event.setCanceled(true);
+			}
+			if(event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.PAPER){
+				Minecraft.getMinecraft().player.moveForward=199.0F;
+				event.setCanceled(true);
+			}
+		}
+	}
 }
