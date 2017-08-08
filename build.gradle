@@ -39,8 +39,23 @@ minecraft {
     replace '${version}', project.version
     mappings = "snapshot_20170628"
 	
-	clientRunArgs += "-uuid=0b1ec5ad-cb2a-43b7-995d-889320eb2e5b -username=The_Fireplace"
+	clientRunArgs += "--uuid=0b1ec5ad-cb2a-43b7-995d-889320eb2e5b --username=The_Fireplace"
 }
+
+dependencies {
+	deobfCompile "the_fireplace.overlord:Overlord-1.12:2.4.4"
+	deobfCompile "mcp.mobius.waila:Hwyla:1.8.19-B33_1.12"
+}
+
+repositories{
+    maven { //Guide API, Waila
+		url "http://tehnut.info/maven/"
+	}
+    maven { //Overlord
+		url "http://maven.brainstonemod.com/"
+	}
+}
+
 
 processResources
 {

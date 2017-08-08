@@ -12,12 +12,15 @@ import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
+import the_fireplace.hvii.compat.overlord.IOvCompat;
+import the_fireplace.hvii.compat.overlord.OvCompat;
 import the_fireplace.hvii.config.ConfigValues;
 import the_fireplace.hvii.config.GuiChooseEntities;
 import the_fireplace.hvii.pats.PATSRegistry;
@@ -121,6 +124,14 @@ public class ForgeEvents {
 				break;
 			case "$choosemobs":
 				Minecraft.getMinecraft().displayGuiScreen(new GuiChooseEntities());
+				event.setCanceled(true);
+				break;
+			case "$skelly":
+				IOvCompat compat;
+				if(Loader.isModLoaded("overlord")){
+					compat = new OvCompat();
+					compat.spawnSkelly(Minecraft.getMinecraft().player.getPosition());
+				}
 				event.setCanceled(true);
 				break;
 		}
