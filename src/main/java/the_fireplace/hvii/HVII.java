@@ -191,13 +191,18 @@ public class HVII {
 				for(int y=0;y<=player.posY;y++){
 					IBlockState state = world.getBlockState(new BlockPos(x, y, z));
 					ItemStack stack = new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state));
-					if(!stack.isEmpty())
-						for(int oreId:OreDictionary.getOreIDs(stack)){
+					if(!stack.isEmpty()) {
+						String regDomain = stack.getItem().getRegistryName().getResourceDomain();
+						if(regDomain.toLowerCase().equals("geolosys") && !ArrayUtils.contains(ConfigValues.EXCLUDEORES, stack.getDisplayName())){
+							player.sendMessage(new TextComponentTranslation("hvii.orefound", stack.getDisplayName(), x, y, z));
+						}
+						for (int oreId : OreDictionary.getOreIDs(stack)) {
 							String oreName = OreDictionary.getOreName(oreId);
-							if(oreName.startsWith("ore") && !ArrayUtils.contains(ConfigValues.EXCLUDEORES, oreName)){
+							if (oreName.startsWith("ore") && !ArrayUtils.contains(ConfigValues.EXCLUDEORES, oreName)) {
 								player.sendMessage(new TextComponentTranslation("hvii.orefound", oreName, x, y, z));
 							}
 						}
+					}
 				}
 			}
 		}
