@@ -188,7 +188,7 @@ public class HVII {
 		ChunkPos chunk = new ChunkPos(player.getPosition());
 		for(int x=chunk.getXStart();x<=chunk.getXEnd();x++){
 			for(int z=chunk.getZStart();z<=chunk.getZEnd();z++){
-				for(int y=0;y<=player.posY;y++){
+				for(int y=0;y<=world.getTopSolidOrLiquidBlock(player.getPosition()).getY();y++){
 					IBlockState state = world.getBlockState(new BlockPos(x, y, z));
 					ItemStack stack = new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state));
 					if(!stack.isEmpty()) {
