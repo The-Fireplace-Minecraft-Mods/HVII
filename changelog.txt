@@ -1,3 +1,2 @@
-Updated to 1.12
-Added Ore Scanning
-Added $commands
+Ore Scanning now works on Geolosys Ores
+Ore Scanning now scans from the top block's y value at the player's position
