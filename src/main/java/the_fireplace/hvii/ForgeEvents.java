@@ -41,7 +41,7 @@ public class ForgeEvents {
 	@SubscribeEvent
 	public static void livingUpdate(LivingEvent.LivingUpdateEvent event) {
 		if(EntityList.getKey(event.getEntityLiving()) != null) {
-			if (ArrayUtils.contains(ConfigValues.GLOWINGENTITIES, EntityList.getKey(event.getEntityLiving()).getResourcePath())) {
+			if (ArrayUtils.contains(ConfigValues.GLOWINGENTITIES, EntityList.getKey(event.getEntityLiving()).getNamespace())) {
 				if (!event.getEntityLiving().isGlowing())
 					event.getEntityLiving().setGlowing(true);
 			} else {

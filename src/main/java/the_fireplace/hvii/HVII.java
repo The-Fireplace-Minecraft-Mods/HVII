@@ -12,7 +12,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -28,6 +27,7 @@ import the_fireplace.hvii.pats.PATSRegistry;
 import the_fireplace.hvii.pats.PatsBowTargeting;
 import the_fireplace.hvii.pats.PatsGenericThrowableTargeting;
 import the_fireplace.hvii.keybind.KeyHandlerHVII;
+
 /**
  * @author The_Fireplace
  */
@@ -192,7 +192,7 @@ public class HVII {
 					IBlockState state = world.getBlockState(new BlockPos(x, y, z));
 					ItemStack stack = new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state));
 					if(!stack.isEmpty()) {
-						String regDomain = stack.getItem().getRegistryName().getResourceDomain();
+						String regDomain = stack.getItem().getRegistryName().getNamespace();
 						if(regDomain.toLowerCase().equals("geolosys") && !ArrayUtils.contains(ConfigValues.EXCLUDEORES, stack.getDisplayName())){
 							player.sendMessage(new TextComponentTranslation("hvii.orefound", stack.getDisplayName(), x, y, z));
 						}
