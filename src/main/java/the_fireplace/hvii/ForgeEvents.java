@@ -1,13 +1,16 @@
 package the_fireplace.hvii;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerAbilities;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -25,6 +28,8 @@ import the_fireplace.hvii.config.ConfigValues;
 import the_fireplace.hvii.config.GuiChooseEntities;
 import the_fireplace.hvii.pats.PATSRegistry;
 
+import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -41,14 +46,14 @@ public class ForgeEvents {
 	@SubscribeEvent
 	public static void livingUpdate(LivingEvent.LivingUpdateEvent event) {
 		if(EntityList.getKey(event.getEntityLiving()) != null) {
-			if (ArrayUtils.contains(ConfigValues.GLOWINGENTITIES, EntityList.getKey(event.getEntityLiving()).getNamespace())) {
+			if (ArrayUtils.contains(ConfigValues.GLOWINGENTITIES, EntityList.getKey(event.getEntityLiving()).getPath())) {
 				if (!event.getEntityLiving().isGlowing())
 					event.getEntityLiving().setGlowing(true);
 			} else {
 				if (event.getEntityLiving().isGlowing())
 					event.getEntityLiving().setGlowing(false);
 			}
-		}else if(event.getEntityLiving() instanceof EntityPlayer){
+		} else if(event.getEntityLiving() instanceof EntityPlayer) {
 			if (ArrayUtils.contains(ConfigValues.GLOWINGENTITIES, "player")) {
 				if (!event.getEntityLiving().isGlowing())
 					event.getEntityLiving().setGlowing(true);
@@ -109,7 +114,7 @@ public class ForgeEvents {
 	
 	@SubscribeEvent
 	public static void onChatSent(ClientChatEvent event){
-		switch(event.getOriginalMessage()){
+		switch(event.getOriginalMessage().toLowerCase()){
 			case "$orescan":
 				HVII.scanOres();
 				event.setCanceled(true);
@@ -134,6 +139,25 @@ public class ForgeEvents {
 				}
 				event.setCanceled(true);
 				break;
+			case "$chunkage":
+				Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("Chunk age is %s ticks", Minecraft.getMinecraft().world.getChunk(Minecraft.getMinecraft().player.getPosition()).getInhabitedTime()));
+				event.setCanceled(true);
+				break;
+			case "$killaura":
+				killAuraEnabled = !killAuraEnabled;
+				event.setCanceled(true);
+				break;
+		}
+	}
+
+	private static boolean killAuraEnabled;
+
+	@SubscribeEvent
+	public static void onClientTick(TickEvent.ClientTickEvent e) {
+		if(killAuraEnabled && Minecraft.getMinecraft().world != null && Minecraft.getMinecraft().world.getTotalWorldTime() % 5 == 0) {
+			List<Entity> inRange = Minecraft.getMinecraft().world.getEntitiesInAABBexcluding(Minecraft.getMinecraft().player, Minecraft.getMinecraft().player.getEntityBoundingBox().grow(4), en -> en instanceof IAnimals);
+			if(!inRange.isEmpty())
+				Minecraft.getMinecraft().playerController.attackEntity(Minecraft.getMinecraft().player, inRange.get(new Random().nextInt(inRange.size())));
 		}
 	}
 }
