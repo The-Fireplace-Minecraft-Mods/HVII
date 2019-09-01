@@ -1,3 +1,1 @@
-Updated to 1.12
-Added Ore Scanning
-Added $commands
+Added basic killaura, enable using $killaura, or $killaura nc to ignore weapon cooldown

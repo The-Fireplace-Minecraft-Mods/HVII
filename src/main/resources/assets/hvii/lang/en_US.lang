@@ -6,6 +6,8 @@ key.orescan.desc=Scan for Ores
 key.hvii.category=HVII
 
 hvii.orefound=Ore %s found at x %d, y %d, z %d
+hvii.killaura_on=Turned on killaura.
+hvii.killaura_off=Turned off killaura.
 
 cape_toggle=Enable Cape Toggling
 cape_toggle.tooltip=Enable cape toggle?

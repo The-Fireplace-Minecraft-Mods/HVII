@@ -145,16 +145,27 @@ public class ForgeEvents {
 				break;
 			case "$killaura":
 				killAuraEnabled = !killAuraEnabled;
+				if(killAuraEnabled)
+					killAura_noCooldown = false;
+				Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation(killAuraEnabled ? "hvii.killaura_on" : "hvii.killaura_off"));
+				event.setCanceled(true);
+				break;
+			case "$killaura nc":
+				killAuraEnabled = !killAuraEnabled;
+				if(killAuraEnabled)
+					killAura_noCooldown = true;
+				Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation(killAuraEnabled ? "hvii.killaura_on" : "hvii.killaura_off"));
 				event.setCanceled(true);
 				break;
 		}
 	}
 
 	private static boolean killAuraEnabled;
+	private static boolean killAura_noCooldown;
 
 	@SubscribeEvent
 	public static void onClientTick(TickEvent.ClientTickEvent e) {
-		if(killAuraEnabled && Minecraft.getMinecraft().world != null && Minecraft.getMinecraft().world.getTotalWorldTime() % 5 == 0) {
+		if(killAuraEnabled && Minecraft.getMinecraft().world != null && Minecraft.getMinecraft().world.getTotalWorldTime() % 5 == 0 && (!killAura_noCooldown || !Minecraft.getMinecraft().player.getCooldownTracker().hasCooldown(Minecraft.getMinecraft().player.getHeldItemMainhand().getItem()))) {
 			List<Entity> inRange = Minecraft.getMinecraft().world.getEntitiesInAABBexcluding(Minecraft.getMinecraft().player, Minecraft.getMinecraft().player.getEntityBoundingBox().grow(4), en -> en instanceof IAnimals);
 			if(!inRange.isEmpty())
 				Minecraft.getMinecraft().playerController.attackEntity(Minecraft.getMinecraft().player, inRange.get(new Random().nextInt(inRange.size())));
