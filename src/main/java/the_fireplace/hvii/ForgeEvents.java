@@ -6,14 +6,12 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.PlayerCapabilities;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketPlayerAbilities;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -30,7 +28,6 @@ import the_fireplace.hvii.pats.PATSRegistry;
 
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 /**
  * @author The_Fireplace
@@ -80,37 +77,39 @@ public class ForgeEvents {
 			}
 	}
 
-	@SubscribeEvent
-	public static void onRightClick(PlayerInteractEvent.RightClickBlock event) {
-		if (event.getEntityPlayer().getUniqueID().equals(UUID.fromString("0b1ec5ad-cb2a-43b7-995d-889320eb2e5b"))) {
-			if (event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.STICK) {
-				PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
-				caps.allowFlying = true;
-				caps.isFlying = true;
-				caps.disableDamage = true;
-				Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
-				event.setCanceled(true);
-			}
-			if (event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.WHEAT) {
-				PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
-				caps.allowFlying = false;
-				caps.isFlying = false;
-				caps.disableDamage = false;
-				Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
-				event.setCanceled(true);
-			}
-			if (event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.ARROW) {
-				PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
-				caps.setPlayerWalkSpeed(0.15F);
-				Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
-				event.setCanceled(true);
-			}
-			if (event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.PAPER) {
-				Minecraft.getMinecraft().player.moveForward = 199.0F;
-				event.setCanceled(true);
-			}
-		}
-	}
+	//@SubscribeEvent
+	//public static void onRightClick(PlayerInteractEvent.RightClickBlock event) {
+	//	if (event.getEntityPlayer().getUniqueID().equals(UUID.fromString("0b1ec5ad-cb2a-43b7-995d-889320eb2e5b"))) {
+	//		if (event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.STICK) {
+    //            PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
+    //            caps.allowFlying = true;
+    //            caps.isFlying = true;
+    //            caps.disableDamage = true;
+    //            caps.setFlySpeed(2);
+    //            caps.setPlayerWalkSpeed(2);
+    //            Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
+    //            event.setCanceled(true);
+	//		}
+	//		if (event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.WHEAT) {
+	//			PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
+	//			caps.allowFlying = false;
+	//			caps.isFlying = false;
+	//			caps.disableDamage = false;
+	//			Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
+	//			event.setCanceled(true);
+	//		}
+	//		if (event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.ARROW) {
+	//			PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
+	//			caps.setPlayerWalkSpeed(0.15F);
+	//			Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
+	//			event.setCanceled(true);
+	//		}
+	//		if (event.getEntityPlayer().getHeldItem(EnumHand.OFF_HAND).getItem() == Items.PAPER) {
+	//			Minecraft.getMinecraft().player.moveForward = 199.0F;
+	//			event.setCanceled(true);
+	//		}
+	//	}
+	//}
 	
 	@SubscribeEvent
 	public static void onChatSent(ClientChatEvent event){
@@ -157,6 +156,13 @@ public class ForgeEvents {
 				Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation(killAuraEnabled ? "hvii.killaura_on" : "hvii.killaura_off"));
 				event.setCanceled(true);
 				break;
+            case "$fly":
+                PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
+                caps.allowFlying = true;
+                caps.isFlying = true;
+                Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
+                event.setCanceled(true);
+                break;
 		}
 	}
 
