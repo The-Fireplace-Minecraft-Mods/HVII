@@ -1,13 +1,13 @@
 package the_fireplace.hvii;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.CPacketPlayerAbilities;
+import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.ClientChatEvent;
@@ -32,6 +32,7 @@ import java.util.Random;
 /**
  * @author The_Fireplace
  */
+@SuppressWarnings("NoTranslation")
 @SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ForgeEvents {
@@ -157,24 +158,51 @@ public class ForgeEvents {
 				event.setCanceled(true);
 				break;
             case "$fly":
-                PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
-                caps.allowFlying = true;
-                caps.isFlying = true;
-                Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
+                //PlayerCapabilities caps = Minecraft.getMinecraft().player.capabilities;
+                //caps.allowFlying = true;
+                //caps.isFlying = true;
+                //Minecraft.getMinecraft().player.connection.sendPacket(new CPacketPlayerAbilities(caps));
+                fly = !fly;
                 event.setCanceled(true);
                 break;
+			case "$nofall":
+				noFall = !noFall;
+				event.setCanceled(true);
+				break;
 		}
 	}
 
 	private static boolean killAuraEnabled;
 	private static boolean killAura_noCooldown;
+	private static boolean noFall;
+	private static boolean fly;
 
 	@SubscribeEvent
 	public static void onClientTick(TickEvent.ClientTickEvent e) {
-		if(killAuraEnabled && Minecraft.getMinecraft().world != null && Minecraft.getMinecraft().world.getTotalWorldTime() % 5 == 0 && (!killAura_noCooldown || !Minecraft.getMinecraft().player.getCooldownTracker().hasCooldown(Minecraft.getMinecraft().player.getHeldItemMainhand().getItem()))) {
-			List<Entity> inRange = Minecraft.getMinecraft().world.getEntitiesInAABBexcluding(Minecraft.getMinecraft().player, Minecraft.getMinecraft().player.getEntityBoundingBox().grow(4), en -> en instanceof IAnimals);
-			if(!inRange.isEmpty())
-				Minecraft.getMinecraft().playerController.attackEntity(Minecraft.getMinecraft().player, inRange.get(new Random().nextInt(inRange.size())));
+		if(Minecraft.getMinecraft().world != null && Minecraft.getMinecraft().world.getTotalWorldTime() % 5 == 0) {
+			EntityPlayerSP player = Minecraft.getMinecraft().player;
+			if (killAuraEnabled && (!killAura_noCooldown || !player.getCooldownTracker().hasCooldown(player.getHeldItemMainhand().getItem()))) {
+				List<Entity> inRange = Minecraft.getMinecraft().world.getEntitiesInAABBexcluding(player, player.getEntityBoundingBox().grow(4), en -> en instanceof IAnimals && player.canEntityBeSeen(en));
+				if (!inRange.isEmpty())
+					Minecraft.getMinecraft().playerController.attackEntity(player, inRange.get(new Random().nextInt(inRange.size())));
+			}
+
+			if (noFall && player.fallDistance > 2)
+				player.connection.sendPacket(new CPacketPlayer(true));
+
+			if(fly) {
+				player.capabilities.isFlying = false;
+				player.jumpMovementFactor = 1;
+				player.setAIMoveSpeed(1);
+
+				player.setVelocity(0, 0, 0);
+
+				if(Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed())
+					player.setVelocity(player.motionX, player.motionY + 1, player.motionZ);
+
+				if(Minecraft.getMinecraft().gameSettings.keyBindSneak.isPressed())
+					player.setVelocity(player.motionX, player.motionY - 1, player.motionZ);
+			}
 		}
 	}
 }

@@ -1,2 +1,2 @@
-Added basic killaura, enable using $killaura, or $killaura nc to ignore weapon cooldown
-Added an experimental $fly and $chunkage
+Work on killaura and fly
+Add experimental nofall
