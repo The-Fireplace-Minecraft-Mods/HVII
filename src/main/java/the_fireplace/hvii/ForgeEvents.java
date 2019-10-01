@@ -191,14 +191,16 @@ public class ForgeEvents {
 				player.connection.sendPacket(new CPacketPlayer(true));
 
 			if(fly) {
-				player.capabilities.isFlying = false;
+				player.capabilities.isFlying = true;
 				player.jumpMovementFactor = 1;
 				player.setAIMoveSpeed(1);
 
-				player.setVelocity(0, 0, 0);
+				player.setVelocity(player.motionX, player.motionY > 0 || player.isSneaking() ? player.motionY : 0, player.motionZ);
 
-				if(Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed())
+				if(Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()) {
+					player.jump();
 					player.setVelocity(player.motionX, player.motionY + 1, player.motionZ);
+				}
 
 				if(Minecraft.getMinecraft().gameSettings.keyBindSneak.isPressed())
 					player.setVelocity(player.motionX, player.motionY - 1, player.motionZ);
