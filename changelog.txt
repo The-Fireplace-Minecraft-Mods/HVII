@@ -1,2 +1,2 @@
-Ore Scanning now works on Geolosys Ores
-Ore Scanning now scans from the top block's y value at the player's position
+Added basic killaura, enable using $killaura, or $killaura nc to ignore weapon cooldown
+Added an experimental $fly and $chunkage

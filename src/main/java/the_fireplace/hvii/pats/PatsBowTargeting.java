@@ -17,7 +17,7 @@ public class PatsBowTargeting extends PatsRendererBase {
     public void handleRender(Minecraft mc, boolean primaryRenderEnabled, boolean secondaryRenderEnabled, int projectileTickCount, EnumParticleTypes primaryParticle, EnumParticleTypes secondaryParticle, boolean extensiveSecondary, float inaccuracyBoost) {
         super.handleRender(mc, primaryRenderEnabled, secondaryRenderEnabled, projectileTickCount, primaryParticle, secondaryParticle, extensiveSecondary, inaccuracyBoost);
         if(mc.player.getItemInUseCount() > 0){
-            float velocity = ItemBow.getArrowVelocity(mc.player.getItemInUseCount() > mc.player.getItemInUseMaxCount() ? mc.player.getItemInUseMaxCount() : mc.player.getItemInUseCount());
+            float velocity = ItemBow.getArrowVelocity(Math.min(mc.player.getItemInUseCount(), mc.player.getItemInUseMaxCount()));
             if ((double)velocity >= 0.1D){
                 resetPos();
                 setAim(mc.player, mc.player.rotationPitch, mc.player.rotationYaw, velocity*3.0f, 0.0F+inaccuracyBoost);

@@ -1,5 +1,6 @@
 package the_fireplace.hvii.config;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
@@ -23,7 +24,7 @@ public class HVIIConfigGui extends GuiConfig{
 	}
 
 	public static List<IConfigElement> getConfigElements(){
-		List<IConfigElement> list = new ArrayList();
+		List<IConfigElement> list = Lists.newArrayList();
 		list.add(new DummyConfigElement.DummyCategoryElement("skin", "cfg.hvii.category.skin", SkinEntry.class));
 		list.add(new DummyConfigElement.DummyCategoryElement("pats", "cfg.hvii.category.pats", FatsEntry.class));
 		list.addAll(new ConfigElement(HVII.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements());

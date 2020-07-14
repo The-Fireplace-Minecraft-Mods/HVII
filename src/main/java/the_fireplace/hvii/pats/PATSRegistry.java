@@ -18,7 +18,7 @@ public final class PATSRegistry {
     private static Map<ItemStack, IPatsRenderer> patsHandlers = Maps.newHashMap();
 
     /**
-     * Registers a F.A.T.S. Handler for an ItemStack
+     * Registers a P.A.T.S. Handler for an ItemStack
      * @param stack
      *  A stack containing the Item and metadata. The count doesn't matter. To use any meta, set meta to OreDictionary.WILDCARD_VALUE
      * @param handler

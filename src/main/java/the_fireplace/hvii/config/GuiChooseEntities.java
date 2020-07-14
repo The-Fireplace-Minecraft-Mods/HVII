@@ -91,9 +91,9 @@ public class GuiChooseEntities extends GuiScreen {
                     if(button instanceof ToggleButton){
                         boolean flag = ((ToggleButton) button).toggled;
                         if(flag){
-                            tmpMobs = ArrayUtils.remove(tmpMobs, ArrayUtils.indexOf(tmpMobs, currentlyShownMobs[button.id-2].getResourcePath()));
+                            tmpMobs = ArrayUtils.remove(tmpMobs, ArrayUtils.indexOf(tmpMobs, currentlyShownMobs[button.id-2].getPath()));
                         }else{
-                            tmpMobs = ArrayUtils.add(tmpMobs, currentlyShownMobs[button.id-2].getResourcePath());
+                            tmpMobs = ArrayUtils.add(tmpMobs, currentlyShownMobs[button.id-2].getPath());
                         }
                         ((ToggleButton) button).toggled=!flag;
                     }else{
@@ -138,7 +138,7 @@ public class GuiChooseEntities extends GuiScreen {
 
         for (int x=0;x<8;x++){
             if(currentlyShownMobs[x] != null)
-                drawString(fontRenderer, currentlyShownMobs[x].getResourcePath(), guiLeft+24, guiTop+10+x*18, Color.WHITE.getRGB());
+                drawString(fontRenderer, currentlyShownMobs[x].getPath(), guiLeft+24, guiTop+10+x*18, Color.WHITE.getRGB());
         }
     }
 
@@ -168,7 +168,7 @@ public class GuiChooseEntities extends GuiScreen {
                     currentlyShownMobs[i-2] = keys[tmp];
                     buttonList.get(i).enabled = true;
                     buttonList.get(i).visible = true;
-                    ((ToggleButton)buttonList.get(i)).toggled= ArrayUtils.contains(tmpMobs, currentlyShownMobs[i-2].getResourcePath());
+                    ((ToggleButton)buttonList.get(i)).toggled= ArrayUtils.contains(tmpMobs, currentlyShownMobs[i-2].getPath());
                 } else {
                     currentlyShownMobs[i-2] = null;
                     buttonList.get(i).enabled = false;
@@ -181,7 +181,7 @@ public class GuiChooseEntities extends GuiScreen {
                 currentlyShownMobs[i-2] = keys[i + page4];
                 buttonList.get(i).enabled = true;
                 buttonList.get(i).visible = true;
-                ((ToggleButton)buttonList.get(i)).toggled= ArrayUtils.contains(tmpMobs, currentlyShownMobs[i-2].getResourcePath());
+                ((ToggleButton)buttonList.get(i)).toggled= ArrayUtils.contains(tmpMobs, currentlyShownMobs[i-2].getPath());
             }
         }
     }
